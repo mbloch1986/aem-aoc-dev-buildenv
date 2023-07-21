@@ -1,0 +1,10 @@
+FROM --platform=linux/amd64 centos:latest
+RUN sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
+RUN sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
+RUN yum -y groupinstall "Development Tools"
+RUN yum -y install maven python39 wget unzip python39-devel python39-lxml python39-pip-wheel python39-setuptools-wheel
+RUN yum -y install "https://yum.puppetlabs.com/puppet7/el/8/x86_64/puppet-agent-7.18.0-1.el8.x86_64.rpm"
+RUN pip3 install aws-google-auth
+RUN wget "https://releases.hashicorp.com/packer/1.9.2/packer_1.9.2_linux_amd64.zip"
+RUN unlink /usr/sbin/packer
+ENTRYPOINT [ "bash" ]
